@@ -1,0 +1,14 @@
+{
+  "name": "dmx",
+  "version": "1.0.0",
+  "description": "controll dmx lights",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serialport": "^2.0.6"
+  }
+}
