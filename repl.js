@@ -1,25 +1,33 @@
 #!/usr/bin/env node
 
-var net = require("net"),
-    repl = require("repl");
+var serialport = require("serialport");
+var SerialPort = serialport.SerialPort; // localize object constructor
 
-var mood = function () {
-    var m = [ "^__^", "-___-;", ">.<", "<_>" ];
-    return m[Math.floor(Math.random()*m.length)];
-};
-
-//A remote node repl that you can telnet to!
-net.createServer(function (socket) {
-  var remote = repl.start("node::remote> ", socket);
-  //Adding "mood" and "bonus" to the remote REPL's context.
-  remote.context.mood = mood;
-  remote.context.bonus = "UNLOCKED";
-}).listen(5001);
-
-console.log("Remote REPL started on port 5001.");
+var repl = require("repl");
 
 //A "local" node repl with a custom prompt
 var local = repl.start("node::local> ");
 
-// Exposing the function "mood" to the local REPL's context.
-local.context.mood = mood;
+var sp = new SerialPort("COM3", {
+  parser: serialport.parsers.readline("\n")
+});
+sp.on('open', function(){
+  console.log('Serial Port Opened');
+  sp.on('data', function(data){
+      console.log(data);
+  });
+
+  sp.write('1c120w\n')
+
+  local.context.sp = sp;
+  local.context.w = writeDmx;
+  console.log('serial port exported');
+});
+
+
+function writeDmx(val,chan,spt){
+  if (!spt){spt = sp; }
+  if (!chan){chan = 1; }
+  var serLine = chan+ 'c' + val+"w\n";
+  spt.write(serLine);
+}
