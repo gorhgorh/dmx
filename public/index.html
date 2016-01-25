@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>testDocument, YO</title>
+</head>
+<body>
+DMX channels
+<div id="app"></div>
+<div class="channelAddCont">
+	
+<button class="addChan">add chan</button>
+<input type="text" class="chanInVal">
+</div>
+<p></p>
+
+<div class="sliderCont col-md-4" id="sl<%= chan %>">
+  <div><label class="funcLabel"></label></div>
+  <input type="range" min="0" max="255" step="1" value="<%= val %>" name="val" class="valIn"/>
+  <div class="row">
+  	<div class="chanIdCont col-md-6"><label>chan <input type="text" value=" <%= chan %> " name="chan" class="chanIn"></label><br /></div>
+  	<div class="chanValCont col-md-6">
+  		<label>value <input type="text" value="1" class="valText"/></label><br /></div>
+  </div>
+</div>
+
+<script src="scripts/jquery.js"></script>
+<script src="scripts/lodash.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="scripts/index.js"></script>
+<div class="funcLabel"></div>
+</body>
+</html>

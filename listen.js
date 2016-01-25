@@ -2,7 +2,7 @@
 var serialport = require("serialport");
 var SerialPort = serialport.SerialPort; // localize object constructor
 
-var sp = new SerialPort("COM3", {
+var sp = new SerialPort("/dev/ttyACM0", {
   parser: serialport.parsers.readline("\n")
 });
 sp.on('open', function(){
@@ -10,12 +10,6 @@ sp.on('open', function(){
   sp.on('data', function(data){
       console.log(data);
   });
-
-
-  sp.write('1c150w',function(err){
-    if (err){throw err;}
-    else {
-      console.log("sent");
-    }
-  });
 });
+
+module.exports = sp;

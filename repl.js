@@ -8,7 +8,7 @@ var repl = require("repl");
 //A "local" node repl with a custom prompt
 var local = repl.start("node::local> ");
 
-var sp = new SerialPort("COM3", {
+var sp = new SerialPort("/dev/ttyACM0", {
   parser: serialport.parsers.readline("\n")
 });
 sp.on('open', function(){
@@ -17,7 +17,7 @@ sp.on('open', function(){
       console.log(data);
   });
 
-  sp.write('1c120w\n')
+  sp.write('1c120w\n');
 
   local.context.sp = sp;
   local.context.w = writeDmx;
